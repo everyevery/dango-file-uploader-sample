@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Upload your file</title>
+</head>
+<body>
+	{% if image %}
+	<p>
+		<img src="{{ image.file.url }}" alt="">
+	</p>
+	{% endif %}
+	<form action="{% url "views.uploader.image" %}" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<p>{{ form.file.label_tag }}</p>
+		<p> {{ form.file }} </p>
+		<p>{{ form.description.label_tag }}</p>
+		<p> {{ form.description }} </p>
+		<p><input type="submit" value="Upload" /></p>
+	</form>
+</body>
+</html>
