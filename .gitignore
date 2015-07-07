@@ -58,3 +58,4 @@ target/
 
 # Django
 media
+db.sqlite3

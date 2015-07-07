@@ -1,8 +1,8 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from uploader.models import Image
-from uploader.forms import ImageForm
+from piklserver.uploader.models import Image
+from piklserver.uploader.forms import ImageForm
 
 import uuid
 
