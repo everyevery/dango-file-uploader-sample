@@ -18,10 +18,17 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.conf import settings
 
+from rest_framework import routers
+
+from piklserver.uploader.views import ImageViewSet
 from piklserver.uploader import urls as uploader_urls
+
+router = routers.DefaultRouter()
+router.register(r'images', ImageViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^uploader/', include(uploader_urls)),
+    url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

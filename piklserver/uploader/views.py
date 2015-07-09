@@ -1,27 +1,25 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+from rest_framework import viewsets
+
 from piklserver.uploader.models import Image
+from piklserver.uploader.serializers import ImageSerializer
 from piklserver.uploader.forms import ImageForm
 
-import uuid
+
+class ImageViewSet(viewsets.ModelViewSet):
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer
 
 
 def image(request):
-    def get_uuid_file_name(filename):
-        ext = filename.split('.')[-1]
-        filename = "%s.%s" % (uuid.uuid4(), ext)
-        return filename
-
     new_image = None
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
-            original_filename = request.FILES['file'].name
             new_image = Image(file=request.FILES['file'],
-                              name=original_filename,
                               description=request.POST['description'])
-            new_image.file.name = get_uuid_file_name(original_filename)
             new_image.save()
     else:
         form = ImageForm()
